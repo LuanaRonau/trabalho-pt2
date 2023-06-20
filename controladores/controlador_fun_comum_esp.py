@@ -85,7 +85,8 @@ class ControladorFunComumEsp:
     def busca_fun_por_cpf(self, msg):
         while True:
             cpf_buscado = self.__tela_fun_comum.le_cpf(msg)
-            lista_fun_geral = self.__controlador_sistema.controlador_fun_comum.fun_comuns
+            lista_fun_geral = self.__controlador_sistema.controlador_fun_comum.fun_comum_dao.get_all()
+            print("conferindo se a lista de func gerais está sendo acessada: ", lista_fun_geral)
             try:
                 for funcionario in self.__funcionarios:
                     if funcionario.cpf == cpf_buscado:

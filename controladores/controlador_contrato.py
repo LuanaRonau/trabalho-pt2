@@ -1,5 +1,7 @@
 from entidade.contrato import Contrato
 from telas.tela_contrato import TelaContrato
+from dao.contrato_dao import ContratoDAO
+from entidade.fun_comum import FunComum
 
 
 class ControladorContrato:
@@ -8,15 +10,15 @@ class ControladorContrato:
         self.__controlador_sistema = controlador_sistema
         self.__controlador_cargo = self.__controlador_sistema.controlador_cargo
         self.__tela_contrato = TelaContrato()
-        self.__contratos = []
+        self.__contrato_dao = ContratoDAO()
 
     @property
     def tela_contrato(self):
         return self.__tela_contrato
 
     @property
-    def contratos(self):
-        return self.__contratos
+    def contrato_dao(self):
+        return self.__contrato_dao
 
     def inicializa_sistema(self, controlador_de_retorno, objeto):
         lista_opcoes = {1: self.listar_contrato, 2: self.excluir_contrato,
@@ -43,23 +45,24 @@ class ControladorContrato:
         novo_contrato = Contrato(id, dados_contrato['data_inicio'], dados_contrato['cargo'],
                                  dados_contrato['empregado'], dados_contrato['filial'],
                                  dados_contrato['empregador'])
-        self.__contratos.append(novo_contrato)
-        dados_contrato['empregador'].add_contrato(novo_contrato)
+        self.__contrato_dao.add(novo_contrato)
+        if isinstance(dados_contrato['empregado'], FunComum):
+            dados_contrato['empregador'].add_contrato(novo_contrato)
 
     def demitir(self, funcionario):
-        contrato = self.pega_contrato_por_cpf_auto(funcionario.cpf)
+        contrato = self.__contrato_dao.get(funcionario.cpf)
         data_final = self.__tela_contrato.le_data("Digite a data de finalização do contrato: ")
         contrato.data_final = data_final
         funcionario.atividade = False
 
     def excluir_contrato(self, funcionario):
-        contrato = self.pega_contrato_por_cpf_auto(funcionario.cpf)
-        self.__contratos.remove(contrato)
+        contrato = self.__contrato_dao.get(funcionario.cpf)
+        self.__contrato_dao.remove(contrato.empregado.cpf)
         funcionario.atividade = False
 
     def modificar_contrato(self, funcionario):
         opcao = self.__tela_contrato.menu_modificacao()
-        contrato = self.pega_contrato_por_cpf_auto(funcionario.cpf)
+        contrato = self.__contrato_dao.get(funcionario.cpf)
         if opcao == 1:
             nova_data_emissao = self.__tela_contrato.le_data('Digite a nova data de inicio: ')
             contrato.data_inicio = nova_data_emissao
@@ -80,19 +83,19 @@ class ControladorContrato:
 
     def listar_contrato(self, objeto):
         cpf = objeto.cpf
-        contrato = self.pega_contrato_por_cpf_auto(cpf)
+        contrato = self.__contrato_dao.get(cpf)
         self.__tela_contrato.listar_contrato(contrato)
 
     def listar_contrato_auto(self, contrato):
         self.__tela_contrato.listar_contrato(contrato)
 
-    def pega_contrato_por_cpf_auto(self, cpf):
-        for contrato in self.__contratos:
-            if contrato.empregado.cpf == cpf:
-                return contrato
+    # def pega_contrato_por_cpf_auto(self, cpf):
+    #     for contrato in self.__contrato_dao:
+    #         if contrato.empregado.cpf == cpf:
+    #             return contrato
 
     def gera_id(self):
-        if len(self.__contratos) > 0:
-            return self.__contratos[-1].id + 1
+        if len(self.__contrato_dao.get_all()) > 0:
+            return self.__contrato_dao.get_all()[-1].id + 1
         else:
             return 0

@@ -3,7 +3,6 @@ from entidade.filial import Filial
 from controladores.controlador_gerente_esp import ControladorGerenteEsp
 from controladores.controlador_fun_comum_esp import ControladorFunComumEsp
 
-
 class ControladorFilial:
 
     def __init__(self, controlador_sistema, filial: Filial):

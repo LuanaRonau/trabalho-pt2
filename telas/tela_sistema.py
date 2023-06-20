@@ -59,11 +59,15 @@ class TelaSistema(AbstractTela):
                 break
 
         nova_filial = {"cep": resultado[0], "cidade": values['cidade']}
+        self.close()
         return nova_filial
+    
+    def close(self):
+        self.__window.Close()
 
     def pega_cep(self):
-        cep = self.le_int_positivo("Informe o CEP: ")
-        return cep
+        cep = self.le_cep(input("Informe o CEP: "))
+        return cep[0]
 
     def listagem(self, cep, cidade, gerente):
         print(f"CEP: {cep}\nCidade: {cidade}\nGerente: {gerente}\n")

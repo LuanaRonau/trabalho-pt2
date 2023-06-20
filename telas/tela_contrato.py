@@ -33,7 +33,6 @@ class TelaContrato(AbstractTela):
         Funcionario: {contrato.empregado.nome}
         CPF: {contrato.empregado.cpf}
         Empregador: {contrato.empregador.nome}
-        CPF: {contrato.empregador.cpf}
         Cargo: {contrato.cargo.titulo}
         Filial: {contrato.filial.cep}
         Data de emissão: {contrato.data_inicio}
