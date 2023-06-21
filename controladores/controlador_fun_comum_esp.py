@@ -22,6 +22,7 @@ class ControladorFunComumEsp:
 
         while True:
             opcao_escolhida = self.__tela_fun_comum.mostra_opcoes()
+            print("\nfun_comum:", len(self.__controlador_filial.controlador_fun_comum.fun_comum_dao.get_all()))
             funcao_escolhida = lista_opcoes[opcao_escolhida]
             funcao_escolhida()
 
@@ -52,8 +53,8 @@ class ControladorFunComumEsp:
         # Criação do funcionário
         novo_funcionario = FunComum(novo_fun_comum['nome'], novo_fun_comum['CPF'],
                                     novo_fun_comum['data_nasc'])
-        self.__funcionarios.append(novo_funcionario)
-        self.__controlador_sistema.controlador_fun_comum.add_fun_comum(novo_funcionario)
+        # self.__funcionarios.append(novo_funcionario) tava adicionando duas vezes
+        self.__controlador_filial.controlador_fun_comum.add_fun_comum(novo_funcionario)
 
         # Definição das informações para o contrato
         data_inicio = novo_fun_comum['data_inicio']
@@ -85,7 +86,7 @@ class ControladorFunComumEsp:
     def busca_fun_por_cpf(self, msg):
         while True:
             cpf_buscado = self.__tela_fun_comum.le_cpf(msg)
-            lista_fun_geral = self.__controlador_sistema.controlador_fun_comum.fun_comum_dao.get_all()
+            lista_fun_geral = self.__controlador_filial.controlador_fun_comum.fun_comum_dao.get_all()
             print("conferindo se a lista de func gerais está sendo acessada: ", lista_fun_geral)
             try:
                 for funcionario in self.__funcionarios:
@@ -96,7 +97,7 @@ class ControladorFunComumEsp:
                         raise FilialErrada(cpf_buscado)
                 raise NaoExistencia()
             except NaoExistencia:
-                print('Funcionario não encontrado. Tente novamente.')
+                self.__tela_fun_comum.mostra_mensagem('Funcionario não encontrado. Tente novamente.')
             except FilialErrada:
                 FilialErrada(cpf_buscado).msg()
 

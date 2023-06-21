@@ -36,6 +36,7 @@ class ListDAO(ABC):
         try:
             for _ in self.__cache:
                 if _.empregado.cpf == cpf:
+                    print("O contrato está sendo devolvido do dao", _)
                     return _
             raise KeyError
         except KeyError:

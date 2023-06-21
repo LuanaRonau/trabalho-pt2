@@ -6,7 +6,7 @@ class TelaCargo(AbstractTela):
 
     def __init__(self):
         super().__init__()
-        self.__id_gerados = [0]
+        self.__id_gerados = [0, 1, 2]
 
     def mostra_opcoes(self):
         print("\nTela de gerenciamento dos cargos"

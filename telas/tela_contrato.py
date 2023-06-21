@@ -28,11 +28,16 @@ class TelaContrato(AbstractTela):
         return opcao
 
     def listar_contrato(self, contrato: Contrato):
+        # antes gerava excecao ao tentar pegar o atributo nome da string empresa 
+        if contrato.empregador == "Empresa":
+            empregador = "Empresa"
+        else:
+            empregador = contrato.empregador.nome 
         print(f'''
         === CONTRATO NUM {contrato.id} ===
         Funcionario: {contrato.empregado.nome}
         CPF: {contrato.empregado.cpf}
-        Empregador: {contrato.empregador.nome}
+        Empregador: {empregador}
         Cargo: {contrato.cargo.titulo}
         Filial: {contrato.filial.cep}
         Data de emissão: {contrato.data_inicio}

@@ -3,6 +3,8 @@ from entidade.gerente import Gerente
 from entidade.filial import Filial
 from entidade.cargo import Cargo
 from datetime import date
+from entidade.fun_comum import FunComum
+
 
 
 class Contrato:
@@ -15,6 +17,12 @@ class Contrato:
         self.__empregado = empregado
         self.__filial = filial        
         self.__empregador = empregador
+
+        # coloca o funcionario no objeto da filial
+        if isinstance(self.__empregado, FunComum):
+            self.__filial.add_fun_comum(self.__empregado)
+        elif isinstance(self.__empregado, Gerente):
+            self.__filial.gerente = self.__empregado
 
     @property
     def id(self):

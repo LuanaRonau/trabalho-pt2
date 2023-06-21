@@ -47,3 +47,4 @@ class DictDAO(ABC):
 
     def get_all(self):
         return self.__cache.values()
+    

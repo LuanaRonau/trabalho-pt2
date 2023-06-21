@@ -15,6 +15,8 @@ class ContratoDAO(ListDAO):
                     if super().cache[indice].data_inicio < contrato.data_inicio:
                         super().add(indice, contrato)
                         return
+                    super().add(len(super().cache), contrato)
+
 
     def update(self, cpf: str, contrato: Contrato):
         if((contrato is not None) and isinstance(contrato, Contrato) and isinstance(cpf, str)):
@@ -23,10 +25,11 @@ class ContratoDAO(ListDAO):
                     super().update(indice, contrato)
                     return
 
-    def get(self, key:str):
+    def get(self, key: str):
+        print("chave: ", key)
         if isinstance(key, str):
             return super().get(key)
 
-    def remove(self, key:str):
+    def remove(self, key: str):
         if(isinstance(key, str)):
             return super().remove(key)

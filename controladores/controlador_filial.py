@@ -2,12 +2,17 @@ from telas.tela_filial import TelaFilial
 from entidade.filial import Filial
 from controladores.controlador_gerente_esp import ControladorGerenteEsp
 from controladores.controlador_fun_comum_esp import ControladorFunComumEsp
+from controladores.controlador_fun_comum import ControladorFunComum
+from controladores.controlador_gerente import ControladorGerente
+
 
 class ControladorFilial:
 
     def __init__(self, controlador_sistema, filial: Filial):
         self.__controlador_sistema = controlador_sistema
         self.__controlador_contrato = self.__controlador_sistema.controlador_contrato
+        self.__controlador_gerente = ControladorGerente(controlador_sistema)
+        self.__controlador_fun_comum = ControladorFunComum(controlador_sistema)
         self.__filial = filial
         self.__tela_filial = TelaFilial()
 
@@ -18,21 +23,30 @@ class ControladorFilial:
     @property
     def controlador_sistema(self):
         return self.__controlador_sistema
+    
+    @property
+    def controlador_gerente(self):
+        return self.__controlador_gerente
+    
+    @property
+    def controlador_fun_comum(self):
+        return self.__controlador_fun_comum
 
     def inicializa_sistema(self):
-        lista_opcoes = {1: self.controlador_funcomum, 2: self.controlador_gerente,
+        lista_opcoes = {1: self.controlador_fun_comum_esp, 2: self.controlador_gerente_esp,
                         3: self.modificar_dados, 4: self.acessar_contratos,
                         5: self.listar_fun_ativos, 0: self.retornar}
 
         while True:
             opcao_escolhida = self.__tela_filial.mostra_opcoes()
+            print("\nfun_comum:", len(self.__controlador_fun_comum.fun_comum_dao.get_all()))
             funcao_escolhida = lista_opcoes[opcao_escolhida]
             funcao_escolhida()
 
-    def controlador_funcomum(self):
+    def controlador_fun_comum_esp(self):
         ControladorFunComumEsp(self, self.__filial.funcionarios).inicializa_sistema()
 
-    def controlador_gerente(self):
+    def controlador_gerente_esp(self):
         ControladorGerenteEsp(self, self.__filial.gerente).inicializa_sistema()
 
     def modificar_dados(self):

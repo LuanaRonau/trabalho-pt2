@@ -8,6 +8,7 @@ class ControladorContrato:
 
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
+        self.__controlador_gerente = self.__controlador_sistema.controlador_gerente
         self.__controlador_cargo = self.__controlador_sistema.controlador_cargo
         self.__tela_contrato = TelaContrato()
         self.__contrato_dao = ContratoDAO()
@@ -21,6 +22,7 @@ class ControladorContrato:
         return self.__contrato_dao
 
     def inicializa_sistema(self, controlador_de_retorno, objeto):
+        print("\ncontratos:", len(self.__contrato_dao.get_all()))
         lista_opcoes = {1: self.listar_contrato, 2: self.excluir_contrato,
                         3: self.modificar_contrato,
                         0: controlador_de_retorno.inicializa_sistema}
@@ -45,9 +47,13 @@ class ControladorContrato:
         novo_contrato = Contrato(id, dados_contrato['data_inicio'], dados_contrato['cargo'],
                                  dados_contrato['empregado'], dados_contrato['filial'],
                                  dados_contrato['empregador'])
+        
         self.__contrato_dao.add(novo_contrato)
+
         if isinstance(dados_contrato['empregado'], FunComum):
+            self.__controlador_sistema.filial_dao.update(dados_contrato['filial'])
             dados_contrato['empregador'].add_contrato(novo_contrato)
+            self.__controlador_gerente.gerente_dao.update(dados_contrato['empregador'])
 
     def demitir(self, funcionario):
         contrato = self.__contrato_dao.get(funcionario.cpf)

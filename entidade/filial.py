@@ -1,4 +1,6 @@
 from entidade.gerente import Gerente
+from entidade.fun_comum import FunComum
+
 
 class Filial:
     def __init__(self, cep: str, cidade: str, gerente: Gerente):
@@ -6,7 +8,6 @@ class Filial:
         self.__cidade = cidade
         self.__gerente = gerente
         self.__funcionarios = []
-
 
     @property
     def cep(self):
@@ -36,6 +37,8 @@ class Filial:
     def gerente(self, gerente):
         self.__gerente = gerente
 
-    @funcionarios.setter
-    def funcionarios(self, funcionarios: list):
-        self.__funcionarios = funcionarios
+    def add_fun_comum(self, fun_comum: FunComum):
+        self.__funcionarios.append(fun_comum)
+
+    def rem_fun_comum(self, fun_comum: FunComum):
+        self.__funcionarios.remove(fun_comum)
