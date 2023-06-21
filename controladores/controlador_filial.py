@@ -57,6 +57,7 @@ class ControladorFilial:
                 if self.__controlador_sistema.checagem_repeticao_cep(cep_novo):
                     break
             self.__filial.cep = cep_novo
+            self.__controlador_sistema.filial_dao.update(self.__filial)
 
         elif opcao == 2:
             while True:
@@ -64,6 +65,8 @@ class ControladorFilial:
                 if self.__controlador_sistema.checagem_repeticao_cidade(cidade_nova):
                     break
             self.__filial.cidade = cidade_nova
+            self.__controlador_sistema.filial_dao.update(self.__filial)
+
         elif opcao == 0:
             return
 
