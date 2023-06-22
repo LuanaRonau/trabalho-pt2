@@ -1,25 +1,45 @@
 from telas.tela_funcionarios import TelaFuncionario
+import PySimpleGUI as sg
 
 
 class TelaFuncomum(TelaFuncionario):
 
     def __init__(self):
         super().__init__()
+        self.__window = None 
+        self.init_components()
 
     def mostra_opcoes(self):
-        print("\nTELA DE MODIFICAÇÃO: FUNCIONARIO COMUM\n"
-              + "1) Modificar informações\n"
-                "2) Cadastrar novo funcionario comum\n"
-              + "3) Acessar contrato\n"
-              + "4) Listar todos\n"
-              + "5) Demitir\n"
-              + "0) Retornar\n")
-        opcao = super().le_int_validos([1, 2, 3, 4, 5, 0], "Escolha uma opçao: ")
-        return opcao
+        self.init_components()
+        event, values = self.__window.Read()
+        self.__window.Close()
+        if event in (None, 'Cancelar'):
+            exit(0)
+        return int(event)
+    
+    def init_components(self):
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('TELA DE MODIFICAÇÃO: FUNCIONARIO COMUM')],
+            [sg.Text('O que deseja fazer?')],
+            [sg.Button('Modificar informações', key=1, size=[30, 1])],
+            [sg.Button('Cadastrar novo funcionário comum', key=2, size=[30, 1])],
+            [sg.Button('Acessar contrato', key=3, size=[30, 1])],
+            [sg.Button('Listar todos', key=4, size=[30, 1])],
+            [sg.Button('Demitir', key=5, size=[30, 1])],
+            [sg.Button('Retornar', key=0, size=[30, 1])]
+        ]
+        self.__window = sg.Window('Controle de Funcionário Comum', layout, element_justification='c')
 
     def pega_cpf(self, msg):
         return self.le_int_positivo(msg)
 
-    def listagem(self, nome, cpf, data_nasc):
-        print(f"Nome: {nome}\nCPF: {cpf}\nData_nasc: {data_nasc}\n")
+    def listagem(self, funcionarios):
+        string = ''
+        for fun in funcionarios:
+            string += f"\nNome: {fun.nome}\nCPF: {fun.cpf}\nData_nasc: {fun.data_nasc}\n"
+        sg.Popup("Listagem de funcionários comuns", string)
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
 

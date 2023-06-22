@@ -14,21 +14,20 @@ class TelaFilial(AbstractTela):
         event, values = self.__window.Read()
         self.__window.Close()
         if event in (None, 'Cancelar'):
-            event = 0
-        opcao = int(event)
-        return opcao
+            exit(0)
+        return int(event)
     
     def init_components(self):
         sg.ChangeLookAndFeel('Dark Gray 13')
         layout = [
-            [sg.Text('Gerenciando a filial')],
+            [sg.Text('TELA DE MODIFICAÇÃO: FILIAL')],
             [sg.Text('O que deseja fazer?')],
             [sg.Button('Acessar opções de funcionários comuns', key=1, size=[30, 1])],
             [sg.Button('Acessar opções de gerencia', key=2, size=[30, 1])],
             [sg.Button('Modificar dados da filial', key=3, size=[30, 1])],
             [sg.Button('Acessar contratos da filial', key=4, size=[30, 1])],
             [sg.Button('Acessar funcionários ativos', key=5, size=[30, 1])],
-            [sg.Button('Sair', key=0, size=[30, 1])]
+            [sg.Button('Retornar', key=0, size=[30, 1])]
         ]
         self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
 
@@ -39,7 +38,7 @@ class TelaFilial(AbstractTela):
             [sg.Text('(Para demais modificações, consulte as outras opções do menu.)')],
             [sg.Button('CEP', key=1, size=[30, 1])],
             [sg.Button('Cidade', key=2, size=[30, 1])],
-            [sg.Button('Sair', key=0, size=[30, 1])],
+            [sg.Button('Retornar', key=0, size=[30, 1])]
         ]
         self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
 
@@ -58,7 +57,8 @@ class TelaFilial(AbstractTela):
         self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
         event, values = self.__window.Read()
         self.__window.Close()
-        return values['cep']
+        cep = f"{values['cep'][:5]}-{values['cep'][5:]}"
+        return cep
 
     def le_cidade(self):
         sg.ChangeLookAndFeel('Dark Gray 13')
@@ -77,7 +77,7 @@ class TelaFilial(AbstractTela):
         string = ''
         for fun in funcionarios:
             string += f"\nNome: {fun.nome}\nCPF: {fun.cpf}\nData_nasc: {fun.data_nasc}\n"
-        sg.Popup("Listagem de funcionários\n", string)
+        sg.Popup("Listagem de funcionários", string)
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)

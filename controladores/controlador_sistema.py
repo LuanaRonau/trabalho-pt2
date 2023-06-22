@@ -36,8 +36,7 @@ class ControladorSistema:
 
     def inicializa_sistema(self):
         lista_opcoes = {1: self.adicionar_filial, 2: self.excluir_filial,
-                        3: self.modificar_filial, 4: self.listar,
-                        0: self.sair}
+                        3: self.modificar_filial, 4: self.listar}
 
         while True:
             opcao_escolhida = self.__tela_sistema.mostra_opcoes()
@@ -113,6 +112,3 @@ class ControladorSistema:
                 raise NaoExistencia
             except NaoExistencia:
                 self.__tela_sistema.mostra_mensagem('Filial não encontrada. Tente novamente.')
-
-    def sair(self):
-        exit(0)

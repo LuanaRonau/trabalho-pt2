@@ -1,5 +1,6 @@
 from telas.abstract_tela import AbstractTela
 from exception.nao_existe_exp import NaoExistencia
+import PySimpleGUI as sg
 
 
 class TelaCargo(AbstractTela):
@@ -7,15 +8,29 @@ class TelaCargo(AbstractTela):
     def __init__(self):
         super().__init__()
         self.__id_gerados = [0, 1, 2]
+        self.__window = None 
+        self.init_components()
 
     def mostra_opcoes(self):
-        print("\nTela de gerenciamento dos cargos"
-              "\n1 - Adicionar cargo"
-              "\n2 - Alterar cargo"
-              "\n3 - Excluir cargo"
-              "\n4 - Listar todos os cargos"
-              "\n5 - Retornar")
-        return super().le_int_validos([1, 2, 3, 4, 5], "Digite a opção do menu que deseja: ")
+        self.init_components()
+        event, values = self.__window.Read()
+        self.__window.Close()
+        if event in (None, 'Cancelar'):
+            exit(0)
+        return int(event)
+    
+    def init_components(self):
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('TELA DE MODIFICAÇÃO: CARGOS')],
+            [sg.Text('O que deseja fazer?')],
+            [sg.Button('Adicionar cargo', key=1, size=[30, 1])],
+            [sg.Button('Alterar cargo', key=2, size=[30, 1])],
+            [sg.Button('Excluir cargo', key=3, size=[30, 1])],
+            [sg.Button('Listar todos os cargos', key=4, size=[30, 1])],
+            [sg.Button('Retornar', key=0, size=[30, 1])]
+        ]
+        self.__window = sg.Window('Controle dos Cargos', layout, element_justification='c')
 
     def pega_dados_cargo(self, id=None):
         print("\n~~~~~~~~ Inserindo os dados do cargo ~~~~~~~~")

@@ -90,10 +90,10 @@ class ControladorContrato:
     def listar_contrato(self, objeto):
         cpf = objeto.cpf
         contrato = self.__contrato_dao.get(cpf)
-        self.__tela_contrato.listar_contrato(contrato)
+        self.__tela_contrato.listar_contrato([contrato])
 
-    def listar_contrato_auto(self, contrato):
-        self.__tela_contrato.listar_contrato(contrato)
+    def listar_contrato_auto(self, contratos):
+        self.__tela_contrato.listar_contrato(contratos)
 
     # def pega_contrato_por_cpf_auto(self, cpf):
     #     for contrato in self.__contrato_dao:

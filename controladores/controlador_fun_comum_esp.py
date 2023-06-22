@@ -77,9 +77,7 @@ class ControladorFunComumEsp:
     def listar_todos(self):
         lista = self.__funcionarios
         if len(lista) > 0:
-            self.__tela_fun_comum.mostra_mensagem('\n=== Listagem de funcionários ===')
-            for fun in lista:
-                self.__tela_fun_comum.listagem(fun.nome, fun.cpf, fun.data_nasc)
+            self.__tela_fun_comum.listagem(lista)
         else:
             self.__tela_fun_comum.mostra_mensagem('Lista vazia.')
 

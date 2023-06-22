@@ -1,3 +1,4 @@
+from datetime import date
 
 # limpar o arquivo com os funcionarios q eu nn consigo acessar :,)
 # def get_keys(self):
