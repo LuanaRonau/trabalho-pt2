@@ -13,7 +13,10 @@ class TelaSistema(AbstractTela):
         self.init_components()
         event, values = self.__window.Read()
         self.close()
-        return int(event)
+        if event in (None, 'Cancelar'):
+            event = 0
+        opcao = int(event)
+        return opcao
 
     def close(self):
         self.__window.Close()
