@@ -1,31 +1,90 @@
 from telas.abstract_tela import AbstractTela
+import PySimpleGUI as sg
 
 
 class TelaFilial(AbstractTela):
 
     def __init__(self):
         super().__init__()
+        self.__window = None 
+        self.init_components()
 
     def mostra_opcoes(self):
-        print(f"\nTELA DE MODIFICAÇÃO: FILIAL\n"
-              + "O que deseja fazer?\n"
-              + "1) Acessar opções de funcionários comuns\n"
-              + "2) Acessar opções de gerencia\n"
-              + "3) Modificar dados da filial\n"
-              + "4) Acessar contratos da filial\n"
-                "5) Acessar funcionários ativos\n"
-              + "0) Retornar\n")
-        opcao = super().le_int_validos([0, 1, 2, 3, 4, 5], "Escolha uma opção: ")
+        self.init_components()
+        event, values = self.__window.Read()
+        self.__window.Close()
+        if event in (None, 'Cancelar'):
+            event = 0
+        opcao = int(event)
         return opcao
+    
+    def init_components(self):
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('Gerenciando a filial')],
+            [sg.Text('O que deseja fazer?')],
+            [sg.Button('Acessar opções de funcionários comuns', key=1, size=[30, 1])],
+            [sg.Button('Acessar opções de gerencia', key=2, size=[30, 1])],
+            [sg.Button('Modificar dados da filial', key=3, size=[30, 1])],
+            [sg.Button('Acessar contratos da filial', key=4, size=[30, 1])],
+            [sg.Button('Acessar funcionários ativos', key=5, size=[30, 1])],
+            [sg.Button('Sair', key=0, size=[30, 1])]
+        ]
+        self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
 
     def menu_modificacao(self):
-        print("O que deseja modificar?\n"
-              + "(Para demais modificações, consulte as outras opções do menu.)\n"
-              + "1) CEP\n"
-              + "2) Cidade\n"
-              + "0) Retornar\n")
-        opcao = super().le_int_validos([1, 2, 0], "Escolha uma opçao: ")
-        return opcao
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('O que deseja modificar?')],
+            [sg.Text('(Para demais modificações, consulte as outras opções do menu.)')],
+            [sg.Button('CEP', key=1, size=[30, 1])],
+            [sg.Button('Cidade', key=2, size=[30, 1])],
+            [sg.Button('Sair', key=0, size=[30, 1])],
+        ]
+        self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
 
-    def listagem(self, nome, cpf, data_nasc):
-        print(f"Nome: {nome}\nCPF: {cpf}\nData_nasc: {data_nasc}\n")
+        event, values = self.__window.Read()
+        self.__window.Close()
+        return int(event)
+    
+    def le_cep(self):
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('Modificação de Filial')],
+            [sg.Text('Digite no campo abaixo o novo CEP da filial')],
+            [sg.Text('CEP:', size=(15, 1)), sg.InputText('', key='cep')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
+        event, values = self.__window.Read()
+        self.__window.Close()
+        return values['cep']
+
+    def le_cidade(self):
+        sg.ChangeLookAndFeel('Dark Gray 13')
+        layout = [
+            [sg.Text('Modificação de Filial')],
+            [sg.Text('Digite no campo abaixo a nova cidade da filial')],
+            [sg.Text('Cidade:', size=(15, 1)), sg.InputText('', key='cidade')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Controle da Filial', layout, element_justification='c')
+        event, values = self.__window.Read()
+        self.__window.Close()
+        return values['cidade']
+
+    def listagem(self, funcionarios):
+        string = ''
+        for fun in funcionarios:
+            string += f"\nNome: {fun.nome}\nCPF: {fun.cpf}\nData_nasc: {fun.data_nasc}\n"
+        sg.Popup("Listagem de funcionários\n", string)
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values

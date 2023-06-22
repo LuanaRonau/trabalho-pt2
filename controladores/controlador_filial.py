@@ -53,7 +53,7 @@ class ControladorFilial:
         opcao = self.__tela_filial.menu_modificacao()
         if opcao == 1:
             while True:
-                cep_novo = self.__tela_filial.le_cep("Digite o cep novo: ")
+                cep_novo = self.__tela_filial.le_cep()
                 if self.__controlador_sistema.checagem_repeticao_cep(cep_novo):
                     break
             self.__filial.cep = cep_novo
@@ -61,7 +61,7 @@ class ControladorFilial:
 
         elif opcao == 2:
             while True:
-                cidade_nova = self.__tela_filial.pega_input("Digite a cidade nova: ")
+                cidade_nova = self.__tela_filial.le_cidade()
                 if self.__controlador_sistema.checagem_repeticao_cidade(cidade_nova):
                     break
             self.__filial.cidade = cidade_nova
@@ -71,19 +71,19 @@ class ControladorFilial:
             return
 
     def acessar_contratos(self):
-        contratos = self.__controlador_contrato.contratos
+        contratos = self.__controlador_contrato.contrato_dao.get_all()
         for contrato in contratos:
             if contrato.filial == self.__filial:
                 self.__controlador_contrato.listar_contrato_auto(contrato)
 
     def listar_fun_ativos(self):
-        gerente = self.__filial.gerente
-        self.__tela_filial.listagem(gerente.nome, gerente.cpf, gerente.data_nasc)
         lista_fun = self.__filial.funcionarios
+        funcionarios_a_listar = [self.__filial.gerente]
         if len(lista_fun) > 0:
             for fun in lista_fun:
                 if fun.atividade is True:
-                    self.__tela_filial.listagem(fun.nome, fun.cpf, fun.data_nasc)
+                    funcionarios_a_listar.append(fun)
+            self.__tela_filial.listagem(funcionarios_a_listar)
         else:
             self.__tela_filial.mostra_mensagem('Lista de funcionários comuns vazia.')
 
