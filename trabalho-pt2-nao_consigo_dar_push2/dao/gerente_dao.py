@@ -11,6 +11,7 @@ class GerenteDAO(DictDAO):
             super().add(gerente.cpf, gerente)
 
     def update(self, gerente: Gerente):
+        print(super().cache.keys())
         if((gerente is not None) and isinstance(gerente, Gerente) and isinstance(gerente.cpf, str)):
             super().update(gerente.cpf, gerente)
 

@@ -32,6 +32,7 @@ class ControladorFunComumEsp(ControladorFuncionario):
         if funcionario is None:
             return
         opcao = self.__tela_fun_comum.menu_modificacao()
+        print(self.fun_comum_dao.cache.keys())
         # nao quer realizar modificacao
         if opcao == 0:
             return
@@ -74,7 +75,8 @@ class ControladorFunComumEsp(ControladorFuncionario):
                 contrato.empregado = funcionario
                 self.__controlador_contrato.contrato_dao.update(contrato)       
                 filial.setter_funcionarios(funcionario.cpf, funcionario)
-            self.__controlador_sistema.filial_dao.update(filial)         
+            self.__controlador_sistema.filial_dao.update(filial)     
+            print(self.fun_comum_dao.cache.keys())    
 
     def add_fun_comum(self):
         # Realizando a checagem de repetição de CPF

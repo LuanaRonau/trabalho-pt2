@@ -11,6 +11,10 @@ class DictDAO(ABC):
         except FileNotFoundError:
             self.__dump()
 
+    @property
+    def cache(self):
+        return self.__cache
+
     def __dump(self):
         pickle.dump(self.__cache, open(self.__datasource, 'wb'))
 

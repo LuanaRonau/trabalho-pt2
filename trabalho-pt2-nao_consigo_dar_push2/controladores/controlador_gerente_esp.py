@@ -47,6 +47,7 @@ class ControladorGerenteEsp(ControladorFuncionario):
                 contrato.empregado = self.__gerente
                 super().gerente_dao.add(self.__gerente)
                 self.__controlador_contrato.contrato_dao.add(contrato)
+                print(super().gerente_dao.cache.keys())
 
             # modificacao de outros atributos
             else:

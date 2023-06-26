@@ -48,4 +48,7 @@ class Filial:
                 self.add_fun_comum(fun_comum)
 
     def rem_fun_comum(self, fun_comum: FunComum):
-        self.__funcionarios.remove(fun_comum)
+        try: 
+            self.__funcionarios.remove(fun_comum)
+        except:
+            pass

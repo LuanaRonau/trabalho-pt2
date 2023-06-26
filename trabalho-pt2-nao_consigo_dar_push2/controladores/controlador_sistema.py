@@ -51,11 +51,14 @@ class ControladorSistema:
             funcao_escolhida()
 
     def adicionar_filial(self):
-        dados_nova_filial = self.__tela_sistema.pega_dados_cadastro()
-        if dados_nova_filial is None:
-            return
-        # Checagem de repetição
-        dados_nova_filial = self.checagem_repeticao(dados_nova_filial)
+        while True:
+            dados_nova_filial = self.__tela_sistema.pega_dados_cadastro()
+            if dados_nova_filial is None:
+                return
+            # Checagem de repetição
+            if self.checagem_repeticao_cep(dados_nova_filial['cep']):
+                    if self.checagem_repeticao_cidade(dados_nova_filial['cidade']):
+                        break
 
         infos_gerencia, obj = self.__controlador_gerente.add_gerente()
         nova_filial = Filial(dados_nova_filial['cep'], dados_nova_filial['cidade'], infos_gerencia['funcionario'])
@@ -92,23 +95,26 @@ class ControladorSistema:
         else:
             self.__tela_sistema.mostra_mensagem('Lista vazia.\n')
         
-    def checagem_repeticao(self, dados_nova_filial):
-        while True:
-            try:
-                for _ in self.__filial_dao.get_all():
-                    if _.cep == dados_nova_filial['cep']:
-                        raise Repeticao('CEP', dados_nova_filial['cep'])
-                for _ in self.__filial_dao.get_all():
-                    if _.cidade == dados_nova_filial['cidade']:
-                        raise ValueError
-                return dados_nova_filial
-            except Repeticao:
-                self.__tela_sistema.mostra_mensagem(Repeticao('CEP', dados_nova_filial['cep']).msg())
-                dados_nova_filial = self.__tela_sistema.pega_dados_cadastro()
-            except ValueError:
-                self.__tela_sistema.mostra_mensagem(Repeticao('Cidade', dados_nova_filial['cidade']).msg())
-                dados_nova_filial = self.__tela_sistema.pega_dados_cadastro()
+    def checagem_repeticao_cep(self, cep):
+        try:
+            for _ in self.__filial_dao.get_all():
+                if _.cep == cep:
+                    raise Repeticao('CEP', cep)
+            return True
+        except Repeticao:
+            self.__tela_sistema.mostra_mensagem(Repeticao('CEP', cep).msg())
+            return False
 
+    def checagem_repeticao_cidade(self, cidade):
+        try:
+            for _ in self.__filial_dao.get_all():
+                if _.cidade == cidade:
+                    raise Repeticao('Cidade', cidade)
+            return True
+        except Repeticao:
+            self.__tela_sistema.mostra_mensagem(Repeticao('Cidade', cidade).msg())
+            return False
+        
     def busca_por_cep(self, msg):
         while True:
             try:
