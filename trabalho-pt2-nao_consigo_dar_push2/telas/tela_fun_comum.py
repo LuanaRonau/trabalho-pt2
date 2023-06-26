@@ -24,7 +24,7 @@ class TelaFuncomum(TelaFuncionario):
             [sg.Button('Modificar informações', key=1, size=(30, 1))],
             [sg.Button('Cadastrar novo funcionário comum', key=2, size=(30, 1))],
             [sg.Button('Acessar contrato', key=3, size=(30, 1))],
-            [sg.Button('Listar todos os funcionários ativos', key=4, size=(30, 1))],
+            [sg.Button('Listar todos', key=4, size=(30, 1))],
             [sg.Button('Demitir', key=5, size=(30, 1))],
             [sg.Button('Retornar', key=0, size=(30, 1))]
         ]
@@ -32,4 +32,3 @@ class TelaFuncomum(TelaFuncionario):
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)
-
