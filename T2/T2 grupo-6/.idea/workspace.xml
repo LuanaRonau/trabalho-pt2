@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fff7d9e2-943f-45d8-a2dd-e77b5804ce0a" name="Changes" comment="Trabalho OK" />
+    <list default="true" id="fff7d9e2-943f-45d8-a2dd-e77b5804ce0a" name="Changes" comment="Trabalho OK">
+      <change beforePath="$PROJECT_DIR$/../../trabalho-pt2" beforeDir="false" afterPath="$PROJECT_DIR$/../../trabalho-pt2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../trabalho-pt2-nao_consigo_dar_push2/limpa-dao.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +27,7 @@
         <entry key="$PROJECT_DIR$/../../../../trabalho_ver_final/trabalho_ver_final" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../trabalho_ver_final/trabalho_ver_final" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/controladores/controlador_contrato.py" root0="FORCE_HIGHLIGHTING" />
@@ -41,7 +44,6 @@
     <setting file="file://$PROJECT_DIR$/telas/tela_cargo.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/telas/tela_contrato.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/telas/tela_funcionarios.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/teste.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -56,8 +58,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/Documents/GitHub/trab2.py",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+    "last_opened_file_path": "C:/Users/luana/Downloads/DSO/Trabalho 2/T2/T2 grupo-6",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">

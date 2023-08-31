@@ -67,10 +67,10 @@ Data de termino: {data_final}
 
     def listagem(self, lista):
 
-        tab_group = [[]]
+        tab_group = []
         contador = 1
         for _ in lista:
-            tab_group[0].append(sg.Tab(f'Pag.{contador}', [[sg.Text(_)]]))
+            tab_group.append(sg.Tab(f'Pag.{contador}', [[sg.Text(_)]]))
             contador += 1
         layout = [[sg.Text('Listagem de contratos')],
                   [sg.Text('Faça a navegação por páginas.')],
